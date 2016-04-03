@@ -1,0 +1,20 @@
+{
+  "name": "komw/internet-provider-checker",
+  "description": "Provide a checker that pings a certain hosts, and if connection breaks down, sends a twitter information to provider after connection successfull",
+  "require": {
+    "geerlingguy/ping": "1.x-dev",
+    "abraham/twitteroauth": "dev-master"
+  },
+  "authors": [
+    {
+      "name": "Szymon Gładysz",
+      "email": "komw@sgladysz.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-0": {
+      "komw": "src/"
+    }
+  }
+}
