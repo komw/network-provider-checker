@@ -47,10 +47,13 @@ class TweetsDB implements ITweetsDB
     $result = $this->db->query('SELECT * FROM tweets ORDER BY id LIMIT 1');
     $data   = $result->fetchArray(SQLITE3_ASSOC);
     if (isset($data['tweet'])) {
-      $this->db->query('DELETE FROM tweets WHERE id='.$data['id']);
-      return $data['tweet'];
+      return $data;
     } else {
       return null;
     }
+  }
+
+  public function remove($id){
+    return $this->db->query('DELETE FROM tweets WHERE id=' . (int)$id);
   }
 }

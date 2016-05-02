@@ -10,7 +10,7 @@
 ### END INIT INFO
 
 dir="/srv/network-provider-checker/src"
-cmd="php index.php"
+cmd="./start.sh"
 user="www-data"
 
 name=`basename $0`

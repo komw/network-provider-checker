@@ -8,6 +8,8 @@
 
 namespace komw\InternetProviderChecker {
 
+  use Exception;
+
   /**
    * Class Engine
    *
@@ -97,10 +99,15 @@ namespace komw\InternetProviderChecker {
      *
      */
     public function sendTweets() {
-      $message = $this->db->pop();
-      if ($message) {
-        $this->twitter->sendTo($this->configuration->getTwitterReceiver(), $message);
-        $this->logger->log('Send by twitter to: ' . $this->configuration->getTwitterReceiver() . ' message:' . $message);
+      try {
+        $tweet = $this->db->pop();
+        if ($tweet) {
+          $this->twitter->sendTo($this->configuration->getTwitterReceiver(), $tweet['tweet']);
+          $this->db->remove($tweet['id']);
+          $this->logger->log('Send by twitter to: ' . $this->configuration->getTwitterReceiver() . ' message:' . $tweet['tweet']);
+        }
+      } catch (Exception $e) {
+        $this->logger->log($e->getMessage());
       }
     }
   }
