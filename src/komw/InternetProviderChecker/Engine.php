@@ -60,9 +60,9 @@ namespace komw\InternetProviderChecker {
      */
     private function ping($host) {
       $ping = $this->pingLibrary;
-      $this->logger->log('Trying to ping: ' . $host);
+//      $this->logger->log('Trying to ping: ' . $host);
       $result = $ping::alive($host, $this->configuration->getTimeoutMilliseconds());
-      $this->logger->log('Result of ping ' . $host . ' is ' . $result);
+//      $this->logger->log('Result of ping ' . $host . ' is ' . $result);
 
       return (bool)$result;
     }
@@ -71,10 +71,13 @@ namespace komw\InternetProviderChecker {
      *
      */
     public function checkinternetConnection() {
+      $this->logger->log('Checking internet');
+
       $isInternetWorking = false;
       if ($this->ping($this->configuration->getRouterIP())) {
         foreach ($this->configuration->getHostnamesToCheck() as $host) {
           $isInternetWorking = (bool)$isInternetWorking || $this->ping($host);
+          usleep(100000); //0.1s
         }
       }
 

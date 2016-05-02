@@ -12,7 +12,8 @@ namespace komw\InternetProviderChecker;
  *
  * @package komw\InternetProviderChecker
  */
-class Logger{
+class Logger
+{
   /**
    * @var IConfiguration
    */
@@ -24,15 +25,15 @@ class Logger{
    * @param IConfiguration $configurtion
    */
   public function __construct(IConfiguration $configurtion) {
-  $this->configuration = $configurtion;
+    $this->configuration = $configurtion;
   }
 
   /**
    * @param string $string
    */
-  public function log($string = ''){
-    if($this->configuration->isDebugEnabled()){
-      var_dump($string);
+  public function log($string = '') {
+    if ($this->configuration->isDebugEnabled()) {
+      var_dump(date('Y-m-d H:i:s ') . $string);
     }
   }
 }
