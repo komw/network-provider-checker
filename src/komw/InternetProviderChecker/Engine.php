@@ -59,10 +59,11 @@ namespace komw\InternetProviderChecker {
      * @return bool
      */
     private function ping($host) {
-      $ping = $this->pingLibrary;
-//      $this->logger->log('Trying to ping: ' . $host);
+      $ping   = $this->pingLibrary;
       $result = $ping::alive($host, $this->configuration->getTimeoutMilliseconds());
-//      $this->logger->log('Result of ping ' . $host . ' is ' . $result);
+      if (!(bool)$result) {
+        $this->logger->log('Error ping ' . $host . ' is ' . $result);
+      }
 
       return (bool)$result;
     }
@@ -79,8 +80,11 @@ namespace komw\InternetProviderChecker {
           $isInternetWorking = (bool)$isInternetWorking || $this->ping($host);
           sleep($this->configuration->getCheckDelay());
         }
-      }
+      } else {
+        $this->logger->log('Router problem: ' . date('Y-m-d H:i:s'));
 
+        return;
+      }
 
       if ($isInternetWorking === false && $this->initialNotWorkingTime === 0) {
         $this->initialNotWorkingTime = time();
@@ -95,7 +99,6 @@ namespace komw\InternetProviderChecker {
         $this->initialNotWorkingTime = 0;
         $this->logger->log('Internet starts working at: ' . date('Y-m-d H:i:s'));
       }
-
     }
 
     /**
