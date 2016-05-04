@@ -77,7 +77,7 @@ namespace komw\InternetProviderChecker {
       if ($this->ping($this->configuration->getRouterIP())) {
         foreach ($this->configuration->getHostnamesToCheck() as $host) {
           $isInternetWorking = (bool)$isInternetWorking || $this->ping($host);
-          usleep(100000); //0.1s
+          sleep($this->configuration->getCheckDelay());
         }
       }
 

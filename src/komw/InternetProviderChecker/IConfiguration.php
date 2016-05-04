@@ -26,6 +26,10 @@ interface IConfiguration
    */
   public function getTimeoutMilliseconds();
   /**
+   * @return int
+   */
+  public function getCheckDelay();
+  /**
    * Get your router IP (to initial check)
    *
    * @return string
